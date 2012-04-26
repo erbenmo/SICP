@@ -1,0 +1,4 @@
+if b is larger than 0
+     	return a+b
+else
+	return a-b

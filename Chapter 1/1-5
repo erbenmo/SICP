@@ -1,0 +1,8 @@
+applicative order:
+	    has no idea if (p) needs to be evaluated or not
+	    evaluate (p) => looping
+
+normal order:
+	    expand the code
+	    evaluate x
+	    find x=0 => skip p
