@@ -1,0 +1,4 @@
+define recursion
+	if t/f
+	   0
+	   recursion (will not stop)

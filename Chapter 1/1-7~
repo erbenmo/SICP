@@ -1,0 +1,10 @@
+
+
+
+
+
+good-engouth guess x
+	     if global-previous - guess < 0.0001 * x
+	     	good enough
+	     else
+		keep working ~

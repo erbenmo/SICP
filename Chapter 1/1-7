@@ -1,0 +1,11 @@
+for small number, it improves too little every cycle
+is 0.001 good tolerance for small number?
+   sqrt(0.000025) = (0.03) looking for 0.005
+0.001 too demanding for large number
+
+good-engouth guess x
+	     if global-previous - guess < 0.0001 * x
+	     	good enough
+	     else
+		keep working ~
+makes small number sqrt more precise (0.001 is not good enough)
