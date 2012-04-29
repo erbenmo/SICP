@@ -1,0 +1,13 @@
+assume fib(n) = a^n + b^n
+
+fib(n-1) + fib(n) = fib(n+1)   <=>
+a^n + a^n-1 = a^n+1 or a^2 = a + 1
+-b^n - b^n-1 = -b^n+1 or b^2 = b + 1
+
+Therefore a, b = (1+sqrt(5))/2, (1-sqrt(5))/2 is fine 
+also: fib(0) = (1-1)/sqrt(5) = 0
+      fib(1) = 2*sqrt(5)/2/sqrt(5) = 1
+==> Fib(n) = (a^n - b^n) / sqrt(5)
+
+
+absolute value of b^n/sqrt(5) < 1/2 (obvious)
