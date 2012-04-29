@@ -1,0 +1,4 @@
+count-change (SUM-MONEY, COIN-TYPE)
+
+time = exponential
+space = height(tree) = linear since we can reuse space when working on right branch after we finished the left branch
