@@ -1,0 +1,8 @@
+1e9 ~ 0.02999	vs 0.04999
+1e10 ~ 0.0899	vs 0.13999
+1e11 ~ 0.27999	vs 0.42999
+1e12 ~ 0.90000	vs 1.33999
+
+ratio < 1/2
+if target is even, test 2, fast
+if target is prime, needs to check all sqrt(n), slow

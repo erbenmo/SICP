@@ -1,0 +1,7 @@
+duplicated (expmod ** ** **)
+
+good:
+O(N) = O(N/2) + 1
+
+bad:
+O(N) = O(N/2) + O(N/2)
