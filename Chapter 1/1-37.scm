@@ -10,7 +10,7 @@
 (define (cont-iter n d k)
   (cont-frac-iter n d k k 0))
 
-;;; ???
+
 (define (cont-frac-iter n d k cur result)
   (cond
    ((= cur k)
