@@ -1,7 +1,0 @@
-(define (cont-frac n d k)
-  (cont-frac-rec n d k 1))
-
-(define (cont-frac-rec n d k cur)
-  (if (or (> cur k) (= cur k))
-      (/ n d)
-      (/ n (+ d (cont-frac-rec n d k (
