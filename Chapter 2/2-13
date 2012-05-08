@@ -1,0 +1,13 @@
+a = (x1-ax1, x1+ax1)
+b = (x2-bx2, x2+bx2)
+
+a*b = 
+(x1x2 - ax1x2 - bx2x1 + abx1x2, x1x2 + abx1x2 + ax1x2 + bx2x1)
+
+width[a*b] = (ax1x2+bx2x1+ax1x2+bx2x1)/2
+	   = (2*a*x1*x2 + 2*b*x2*x1)/2
+	   = (a+b) * x1 * x2
+
+center = x1*x2 + (ab) x1*x2 ~= x1*x2
+
+percentage = width/center = a+b
