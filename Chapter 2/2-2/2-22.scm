@@ -9,8 +9,8 @@
 
 
 ;; (cons (list 1 2 3) 1) => ((1 2 3) . 1)
-;; (cons (list 1 2 3) (list 1)) => ((1 2 3) 1)
-;; (cons 1 (list 1 2 3)) => (1 1 2 3)
+;; (cons (list 1 2 3) (list 1)) => ((1 2 3) 1)  ok
+;; (cons 1 (list 1 2 3)) => (1 1 2 3)  ok?
 (define (square-list-wrong-2 items)
   (define (iter things answer)
     (if (null? things)
