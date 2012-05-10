@@ -1,0 +1,10 @@
+(define (same-parity . input-list)
+  (let ((head (car input-list)))
+    (define (test items)
+      (cond ((null? items)
+	     ())
+	    ((= (remainder (car items) 2) (remainder head 2))
+	     (append (list (car items)) (test (cdr items))))
+	    (else
+	     (test (cdr items)))))
+    (test input-list)))
