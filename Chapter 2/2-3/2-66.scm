@@ -1,0 +1,5 @@
+(define (lookup x tree)
+  (cond ((null? tree) false)
+	((= x (entry tree)) true)
+	((< x (entry tree)) (lookup x (left-branch tree)))
+	(else (loopup x (right-branch tree)))))
