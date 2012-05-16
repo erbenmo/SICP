@@ -1,0 +1,17 @@
+OP:
+message passing:
+	FOR EACH TYPE:
+	    add new op in cond
+generic
+	FOR EACH TYPE
+	    add new op in table
+
+Type:
+message passing:
+	New Type:
+	    For each op, add implementation in cond
+
+generic:
+	New Type:
+	    For each op, implement and register
+	

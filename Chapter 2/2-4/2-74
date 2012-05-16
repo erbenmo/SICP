@@ -1,0 +1,25 @@
+a)
+get-record varies from departments to departments
+each record (department, content)
+
+each department implement fetch-employer
+put the fetch function under employer - 'department slot
+
+given department record, call the corresponding fetch functin in the slot
+
+
+b) same
+each department implements get-salary function
+put that under salary - 'department slot
+
+c)
+for first division's file
+    call get 'employer 'division 'name
+    if success return
+    else rec on the rest
+    
+    if file is null return nil
+
+d)
+implement new fetch-emplyer and get-salary functin
+put in new slot
