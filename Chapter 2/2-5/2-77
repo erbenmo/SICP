@@ -1,0 +1,3 @@
+2 calls to apply-generic
+1st: get magnitude function from 'complex
+2nd: get magnitude-polar/magnitude-rectangular from ****
