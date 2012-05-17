@@ -1,0 +1,6 @@
+(define (=zero? coeff)
+  (cond ((empty-termlist? coeff) false)
+	((list? coeff)
+	 (and (=zero? (first-term coeff)
+		      (rest-terms coeff)))
+	 (and (number? coeff) (zero coeff 0)))))
