@@ -1,0 +1,15 @@
+global:
+make-account: balance 50
+1) withdraw
+2) deposit
+3) dispatch
+   m = 'deposit
+=> return deposit
+
+
+deposit:
+amount = 40
+=> balance = 90
+
+
+only the code is shared
