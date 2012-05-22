@@ -1,0 +1,6 @@
+||||||||||| global |||||||||
+   dispatch       ~x    ~z
+   		  |	cdr z --> ~x
+		  |
+		  set-car!
+		  ~~same level  -> set-x
