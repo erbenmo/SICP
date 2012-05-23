@@ -1,0 +1,10 @@
+(define (print-queue queue)
+  (define (print-q cur)
+    (cond ((null? cur)
+	   (display ""))
+	  ((eq? cur (rear-ptr queue))
+	   (display (cadr queue)))
+	  (else
+	   (display (car cur))
+	   (print-q (cdr cur)))))
+  (print-q (front-ptr queue)))
