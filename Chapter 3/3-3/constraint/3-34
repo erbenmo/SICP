@@ -1,0 +1,1 @@
+change in b doesn't trigger change in a because b doesn't know a1==a2
