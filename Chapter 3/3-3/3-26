@@ -1,0 +1,4 @@
+use binary tree as back-bone
+binary-search key in the back-bone -> log(n)
+
+others remain the same

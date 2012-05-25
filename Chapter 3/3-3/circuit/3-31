@@ -1,0 +1,4 @@
+event-driven:
+	change in bit-value => action
+for the first-time, there will be no event-trigger
+	so we call action manually
