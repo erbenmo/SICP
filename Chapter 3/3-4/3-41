@@ -1,0 +1,10 @@
+not an issue if get value of an variable is atomic
+otherwise:
+
+get value (10)
+    change value (11)
+return value (11)
+
+get - value (10)
+return value (10)
+change value (11)

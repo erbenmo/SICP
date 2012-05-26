@@ -1,0 +1,1 @@
+Using louis's code, in exchanging we will use the same serializer for two times. One in the serialized-exchange function and the other in the dispatched withdraw/deposit function. According to the implementation of the serializer, if a process has already acquired a mutex and it wants to acquire that mutex again, the busy waiting will never halt.

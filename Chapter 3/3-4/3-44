@@ -1,0 +1,4 @@
+exchance requires account to be in idle state before we start to exchange
+ (not allowed: a is in the middle of exchange with b and we start to exchange a with c)
+
+transfer doesn't require this

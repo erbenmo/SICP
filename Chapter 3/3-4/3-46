@@ -1,0 +1,4 @@
+p1 check (car cell) false
+p2 check (car cell) false
+p1 set it to true, p1 acquired mutex
+p2 set it to true again, p2 acquired mutex

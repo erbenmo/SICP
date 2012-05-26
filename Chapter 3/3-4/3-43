@@ -1,0 +1,24 @@
+obviously after exchanges, three accounts balance should be 10,20,30 in some order
+
+10 20 30
+peter 1~2
+paul  2~3
+
+peter -10
+paul exchange => 10 30 20
+peter swap => 20 20 20
+
+the sum is preserved. but we withdraw/deposit on the wrong account
+
+
+not serializing on individual accounts
+10 20 30
+peter 1~2
+paul  2~3
+
+simultaneously:
+peter -10 on account 2 (erased)
+paul +10 on account 2
+=> 10 30 30
+
+=> 20 30 20 (Extra $10)

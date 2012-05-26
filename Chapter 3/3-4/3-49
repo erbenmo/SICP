@@ -1,0 +1,17 @@
+easy..
+1) a exchange with b
+2) b exchange with a
+
+for 1) only knows a, doesn't know b.
+       can only know 'which b' after accessing a (b is a data of a)
+similar for 2
+
+p1 get mutex for a
+p1 find b
+
+p2 get mutex for b
+p2 find a
+
+p1 want b
+p2 want a
+...

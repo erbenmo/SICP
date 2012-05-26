@@ -1,0 +1,57 @@
+peter +10
+paul -20
+mary -half
+
+a)
+peter ~ paul ~ mary
+110     90     45
+
+peter ~ mary ~ paul
+110     55     35
+
+paul ~ peter ~ mary
+80     90      45
+
+paul ~ mary ~ peter
+80     40     50
+
+mary ~ peter ~ paul
+50     60      40
+
+mary ~ paul ~ peter
+50     30     40
+
+
+b)
+
+3 interleaves
+peter
+paul
+mary
+100+10 / 100-20 / 100-50
+
+
+2 interleaves
+peter paul
+      mary
+      110-55 / 110-20
+
+paul
+mary peter
+     100-50+10 / 100-20+10
+
+paul  peter
+      mary
+      80-40 / 80+10
+
+peter
+mary  paul
+      100+10-20 / 100-50-20
+
+mary  paul
+      peter
+      50+10 / 50-20
+
+paul
+peter mary
+      (100 - 10)/2 or (100+20)/2
