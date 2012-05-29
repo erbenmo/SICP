@@ -29,7 +29,16 @@
 ;; stream implementation
 (define (stream-car stream) (car stream))
 (define (stream-cdr stream) (force (cdr stream)))
-(define (cons-stream a b) (cons a (delay b)))
+;;(define (cons-stream a b) (cons a (delay b)))
+
+
+
+(define-syntax cons-stream
+  (syntax-rules ()
+    ((cons-stream x y)
+     (cons x (delay y)))))
+
+
 
 (define (stream-filter pred stream)
   (cond ((stream-null? stream) the-empty-stream)
@@ -39,8 +48,14 @@
 				     (stream-cdr stream))))
 	(else (stream-filter pred (stream-cdr stream)))))
 
-(define (delay p)
-  (memo-proc (lambda () p)))
+;;(define (delay p) (memo-proc (lambda () p)))
+
+(define-syntax delay
+  (syntax-rules ()
+    ((delay p) (memo-proc (lambda () p)))))
+
+
+
 
 (define (force delayed-object)
   (delayed-object))
@@ -69,8 +84,6 @@
       (cons-stream
        low
        (stream-enumerate-interval (+ low 1) high))))
-;; example
-(stream-car
- (stream-cdr
-  (stream-filter prime?
-		 (stream-enumerate-interval 10000 1000000))))
+
+(define (integers-starting-from n)
+  (cons-stream n (integers-starting-from (+ n 1))))

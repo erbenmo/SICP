@@ -15,9 +15,8 @@
 (defun stream-cdr (s)
   (force (cdr s)))
 
-;;(defmacro delay (expr)`(memo-proc (lambda () ,expr)))
-(defmacro delay (exp)
-  `(lambda () ,exp))
+(defmacro delay (expr)`(memo-proc (lambda () ,expr)))
+;;(defmacro delay (exp)`(lambda () ,exp))
 
 (defun force (delayed-object)
   (funcall delayed-object))
@@ -61,7 +60,14 @@
      (apply #'stream-map
 	    (cons proc (mapcar #'stream-cdr arguments))))))
 
-(defun display-stream (z)
+(defun stream-for-each (proc s)
+  (if (stream-null? s)
+      'done
+    (progn (apply proc (list (stream-car s)))
+	   (stream-for-each proc (stream-cdr s)))))
+
+(defun display-stream (s)
+  (stream-for-each #'show s))
   
 
 ;; example
