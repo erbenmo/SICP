@@ -25,11 +25,14 @@
   (newline)
   (display x))
 
+(define (show x)
+  (display-line x)
+  x)
 
-;; stream implementation
+
 (define (stream-car stream) (car stream))
+
 (define (stream-cdr stream) (force (cdr stream)))
-;;(define (cons-stream a b) (cons a (delay b)))
 
 
 
@@ -48,21 +51,15 @@
 				     (stream-cdr stream))))
 	(else (stream-filter pred (stream-cdr stream)))))
 
-;;(define (delay p) (memo-proc (lambda () p)))
-
 (define-syntax delay
   (syntax-rules ()
     ((delay p) (memo-proc (lambda () p)))))
-
-
-
 
 (define (force delayed-object)
   (delayed-object))
 
 (define (memo-proc proc)
-  (let ((already-run? false)
-	(result false))
+  (let ((already-run? false) (result false))
     (lambda ()
       (if (not already-run?)
 	  (begin (set! result (proc))
@@ -71,7 +68,7 @@
 	  result))))
 
 (define (stream-map proc . argstreams)
-  (if ((stream-null? (car argstreams)))
+  (if (stream-null? (car argstreams))
       the-empty-stream
       (cons-stream
        (apply proc (map stream-car argstreams))
@@ -87,3 +84,30 @@
 
 (define (integers-starting-from n)
   (cons-stream n (integers-starting-from (+ n 1))))
+
+
+
+
+
+;; prime
+(define (smallest-divisor n)
+  (find-divisor n 2))
+
+(define (find-divisor n test-divisor)
+  (cond ((> (square test-divisor) n) n)
+	((divides? test-divisor n) test-divisor)
+	(else (find-divisor n (next test-divisor)))))
+
+(define (divides? a b)
+  (= (remainder b a) 0))
+
+(define (prime? n)
+  (= n (smallest-divisor n)))
+
+(define (naive-next n)
+  (+ n 1))
+
+(define (next n)
+  (if (= n 2)
+      3
+      (+ n 2)))
