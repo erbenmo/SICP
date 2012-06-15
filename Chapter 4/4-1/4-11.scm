@@ -1,0 +1,21 @@
+(define (make-frame variables values)
+  (if (null? variables)
+      `()
+      (cons (car variables)
+	    (cons (car values)
+		  (make-frame (cdr variables) (cdr values))))))
+
+(define (frame-variables frame)
+  (if (null? frame)
+      `()
+      (cons (car frame) (frame-variables (cddr frame)))))
+
+(define (frame-values frame)
+  (define (frame-values-helper f)
+    (if (null? (cdr f))
+	(list (car f))
+	(cons (car f) (frame-values-helper (cddr f)))))
+  (frame-values-helper (cdr frame)))
+
+(define (add-binding-to-frame! var val frame)
+  (cons var (cons val frame)))
