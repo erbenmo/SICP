@@ -320,7 +320,6 @@
 	(list 'cdr cdr)
 	(list 'cons cons)
 	(list 'display display)
-	(list 'map map)
 	(list 'null? null?)))
 
 (define (primitive-procedure-names)

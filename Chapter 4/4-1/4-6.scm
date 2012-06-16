@@ -6,7 +6,7 @@
 (define (expand-let clauses)
   (let ((assignment (car clauses))
 	(body (cadr clauses)))
-    (let ((func make-lambda (left assignment) body))
+    (let ((func (make-lambda (left assignment) body)))
       (cons func (right assignment)))))
 
 (define (left clauses)
@@ -30,7 +30,7 @@
 	 (make-procedure (lambda-parameters exp)
 			 (lambda-body exp)
 			 env))
-	((left? exp) (let->combination exp env))
+	((let? exp) (let->combination exp env))
 	((begin? exp)
 	 (eval-sequence (begin-actions exp) env))
 	((cond? exp) (eval (cond->if exp) env))
