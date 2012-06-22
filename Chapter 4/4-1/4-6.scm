@@ -30,7 +30,7 @@
 	 (make-procedure (lambda-parameters exp)
 			 (lambda-body exp)
 			 env))
-	((let? exp) (let->combination exp env))
+	((let? exp) (eval (let->combination exp env)))
 	((begin? exp)
 	 (eval-sequence (begin-actions exp) env))
 	((cond? exp) (eval (cond->if exp) env))
