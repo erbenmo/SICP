@@ -1,13 +1,22 @@
 (define apply-in-underlying-scheme apply)
-
+(define (rt) (restart 1))
 
 
 (define (eval exp env)
+  (display exp)(newline)
   (cond ((self-evaluating? exp) exp)
-	((variable? exp) (lookup-variable-value exp env))
-	((quoted? exp) (text-of-quotation exp))
-	((assignment? exp) (eval-assignment exp env))
-	((definition? exp) (eval-definition exp env))
+	((variable? exp)
+	 (display "variable") (newline)
+	 (lookup-variable-value exp env))
+	((quoted? exp)
+	 (display "quoted") (newline)
+	 (text-of-quotation exp))
+	((assignment? exp)
+	 (display "assignment") (newline)
+	 (eval-assignment exp env))
+	((definition? exp)
+	 (display "definition")(newline)
+	 (eval-definition exp env))
 	((if? exp) (eval-if exp env))
 	((lambda? exp)
 	 (newline)(display "lambda used!")(newline)
@@ -18,6 +27,10 @@
 	 (eval-sequence (begin-actions exp) env))
 	((cond? exp) (eval (cond->if exp) env))
 	((application? exp)
+	 ;; eval operator, eval operands (operator operants)
+	 (display "apply") (newline)
+	 (display "  operator: ")(display (operator exp))(newline)
+	 (display "  operands: ")(display (operands exp))(newline)
 	 (apply (eval (operator exp) env)
 		(list-of-values (operands exp) env)))
 	(else
@@ -25,8 +38,10 @@
 
 (define (apply procedure arguments)
   (cond ((primitive-procedure? procedure)
+	 (display "primitive") (newline)
 	 (apply-primitive-procedure procedure arguments))
 	((compound-procedure? procedure)
+	 (display "compound") (newline)
 	 (eval-sequence
 	  (procedure-body procedure)
 	  (extend-environment
@@ -51,7 +66,7 @@
 (define (eval-sequence exps env)  
   (cond ((last-exp? exps) (eval (first-exp exps) env))
 	(else (eval (first-exp exps) env)
-	      (eval-sequence (rest-exps) env))))
+	      (eval-sequence (rest-exps exps) env))))
 
 (define (eval-assignment exp env)
   (set-variable-value! (assignment-variable exp)
@@ -61,7 +76,7 @@
 
 (define (eval-definition exp env)
   (define-variable! (definition-variable exp)
-    (eval (definition-value exp) env)
+    (eval (definition-value exp) env)  ;; set var to (eval val)
     env)
   'ok)
 
@@ -320,6 +335,12 @@
 	(list 'cdr cdr)
 	(list 'cons cons)
 	(list 'display display)
+	(list 'newline newline)
+	(list '+ +)
+	(list '* *)
+	(list '- -)
+	(list '/ /)
+	(list '= =)
 	(list 'null? null?)))
 
 (define (primitive-procedure-names)
@@ -330,7 +351,6 @@
        primitive-procedures))
 
 (define (apply-primitive-procedure proc args)
-  (display args)
   (apply-in-underlying-scheme
    (primitive-implementation proc) args))
 

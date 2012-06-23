@@ -2,37 +2,37 @@
 (define apply-in-underlying-scheme apply)
 
 (define (eval exp env)
+  (display exp)(newline)
   (cond ((self-evaluating? exp)
-	 ;;(display "    self-evaluating")(newline)
+	 (display "self-evaluating")(newline)
 	 exp)
 	((variable? exp)
-	 ;;(display "    variable")(newline)
-	 (lookup-variable-value exp env))
+	 (display "variable")(newline)
+	 (lookup-variable-value exp env))	 
 	((quoted? exp)
-	 ;;(display "    quoted")(newline)
+	 (display "quoted")(newline)
 	 (text-of-quotation exp))
 	((assignment? exp)
-	 ;;(display "    assignment")(newline)
+	 (display "assignment")(newline)
 	 (eval-assignment exp env))
 	((definition? exp)
-	 ;;(display "    definition")(newline)
+	 (display "definition")(newline)
 	 (eval-definition exp env))
 	((if? exp)
-	 ;;(display "    if") (newline)
+	 (display "if") (newline)
 	 (eval-if exp env))
 	((lambda? exp)
-	 ;;(display "    lambda")(newline)
+	 (display "lambda")(newline)
 	 (make-procedure (lambda-parameters exp)
 			 (lambda-body exp)
 			 env))
 	((begin? exp)
-	 ;;(display "    begin") (newline)
 	 (eval-sequence (begin-actions exp) env))
 	((cond? exp) (eval (cond->if exp) env))
 	((application? exp)
-	 ;;(display "    apply")(newline)
-;;	 (display exp) (newline)
-;;	 (display (actual-value (operator exp) env)) (newline)
+	 (display "apply")(newline)
+	 (display "  operator: ")(display (operator exp))(newline)
+	 (display "  operands: ")(display (operands exp))(newline)
 	 (apply (actual-value (operator exp) env)
 		 (operands exp) ;; operands are not evaluated
 		 env))
@@ -42,11 +42,11 @@
 
 ;; lazy eval
 (define (actual-value exp env)
-;;  (display " exp: actual-value:  ") (display exp) (newline)
   (force-it (eval exp env)))
 
 (define (force-it obj)
   (cond ((thunk? obj)
+	 (display "  thunk  ") (newline)
 	 (let ((result (actual-value
 			(thunk-exp obj)
 			(thunk-env obj))))
@@ -55,7 +55,7 @@
 	   (set-cdr! (cdr obj) '())
 	   result))
 	((evaluated-thunk? obj)
-;;	 (display "evaluated!")(newline)(display obj)(newline)
+	 (display "evaluated  ") (display obj)(newline)
 	 (thunk-value obj))
 	(else obj)))
 
@@ -82,10 +82,12 @@
 (define (apply procedure arguments env)
 ;;  (display "procedure: ")(display procedure) (newline)
   (cond ((primitive-procedure? procedure)
+	 (display "primitive")(newline)
 	 (apply-primitive-procedure
 	  procedure
 	  (list-of-arg-values arguments env))) ;; actual
 	((compound-procedure? procedure)
+	 (display "compound")(newline)
 	 (eval-sequence
 	  (procedure-body procedure)
 	  (extend-environment
@@ -119,7 +121,7 @@
 	    (list-of-values (rest-operands exps) env))))
 
 (define (eval-if exp env)
-;;  (display "eval-if -- actual") (newline)
+  (display "eval-if -- actual") (newline)
   (if (true? (actual-value (if-predicate exp) env))
       (eval (if-consequent exp) env)
       (eval (if-alternative exp) env)))
@@ -436,14 +438,14 @@
 (define input-prompt ";;; L-Eval input:")
 (define output-prompt ";;; L-Eval value:")
 
-(define (dloop)
+(define (driver-loop)
   (prompt-for-input input-prompt)
   (let ((input (read)))
     (let ((output
 	   (actual-value input the-global-environment)))
       (announce-output output-prompt)
       (user-print output)))
-  (dloop))
+  (driver-loop))
 
 (define (prompt-for-input string)
   (newline) (newline) (display string) (newline))
