@@ -10,8 +10,7 @@
 	 ;;(display "variable")(newline)
 	 (lookup-variable-value exp env))	 
 	((quoted? exp)
-	 ;;(display "quoted")(newline)
-	 (text-of-quotation exp))
+	 (eval-quoted exp env))
 	((assignment? exp)
 	 ;;(display "assignment")(newline)
 	 (eval-assignment exp env))
@@ -168,7 +167,13 @@
 
 (define (text-of-quotation exp) (cadr exp))
 
-
+(define (eval-quoted exp env)
+  (let ((text (text-of-quotation exp)))
+    (if (pair? text)
+        (eval (list 'cons (list 'quote (car text))
+                    (list 'quote (cdr text)))
+              env)
+        text)))
 
 ;; assignments
 (define (assignment? exp)
