@@ -1,0 +1,41 @@
+(define (ok? l)
+  (let ((baker (car l))
+	(cooper (cadr l))
+	(fletcher (caddr l))
+	(miller (cadr (cddr l)))
+	(smith (caddr (cddr l))))
+    (cond
+     ((= baker 5) false)
+     ((= cooper 1) false)
+     ((= fletcher 5) false)
+     ((= fletcher 1) false)
+     ((< miller cooper) false)
+     ((= (abs (- smith fletcher)) 1) false)
+     ((= (abs (- fletcher cooper)) 1) false)
+     (else
+      true))))
+
+(define (get-rest item items)
+  (cond ((null? items)
+	 '())
+	((eq? item (car items))
+	 (get-rest item (cdr items)))
+	(else
+	 (cons (car items) (get-rest item (cdr items))))))
+
+(define (permute items)
+  (let ((result '()))
+    (if (null? items)
+	'(())
+	(begin
+	  (map (lambda (head)
+		 (let ((rest (get-rest head items)))
+		   (let ((rest-result (permute rest)))
+		     (map (lambda (cur-list)
+			    (set! result (cons (cons head cur-list) result)))
+			  rest-result))))
+	       items)
+	  result))))
+
+(define (dwell)
+  (filter ok? (permute '(1 2 3 4 5))))
