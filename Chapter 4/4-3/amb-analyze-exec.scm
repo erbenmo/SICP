@@ -1,5 +1,5 @@
 ; global
-(define (analyze exp env)
+(define (analyze exp)
   (cond ((self-evaluating? exp)
 	 (analyze-self-evaluating exp))
 	((quoted? exp) (analyze-quoted exp))
@@ -11,7 +11,7 @@
 	((amb? exp) (analyze-amb exp))
 	((begin? exp)
 	 (analyze-sequence (begin-actions exp)))
-	((cond? exp) (analye (cond->if exp)))
+	((cond? exp) (analyze (cond->if exp)))
 	((application? exp) (analyze-application exp))
 	(else
 	 (error "Unknown expression type -- ANALYZE" exp))))
@@ -19,7 +19,7 @@
 ; amb
 (define (amb? exp) (tagged-list? exp 'amb))
 
-(define (amb-choices amb) (cdr exp))
+(define (amb-choices exp) (cdr exp))
 
 (define (ambeval exp env succeed fail)
   ((analyze exp) env succeed fail))
@@ -104,10 +104,12 @@
 	     (lambda (val fail2)
 	       (let ((old-value
 		      (lookup-variable-value var env)))
-		 (set-variable-value! var val env)
+		 (set-variable-value! varff val env)
 		 (succeed 'ok
 			  (lambda ()
-			    (set-variable-value! var old-value env)
+			    (set-variable-value! var
+						 old-value
+						 env)
 			    (fail2)))))
 	     fail))))
 
@@ -137,7 +139,7 @@
 	 (get-args (cdr aprocs)
 		   env
 		   (lambda (args fail3)
-		     (succeed (cons args)
+		     (succeed (cons arg args)
 			      fail3))
 		   fail2))
        fail)))
@@ -166,14 +168,12 @@
     (lambda (env succeed fail)
       (define (try-next choices)
 	(if (null? choices)
-	    fail
-	    ((car choices)
-	     env
+	    (fail)
+	    ((car choices) env
 	     succeed
-	     (lambda () (try-next (cdr choices))))))
+	     (lambda ()
+	       (try-next (cdr choices))))))
       (try-next cprocs))))
-
-
 
 
 (define input-prompt ";;; Amb-Eval input:")
@@ -197,7 +197,7 @@
 		       (internal-loop next-alternative))
 		     (lambda ()
 		       (announce-output
-			";;; There are no more vlues of")
+			";;; There are no more values of")
 		       (user-print input)
 		       (driver-loop)))))))
   (internal-loop
@@ -205,3 +205,9 @@
      (newline)
      (display ";;; There is no current problem")
      (driver-loop))))
+
+
+
+
+(define (require p)
+    (if (not p) (amb)))
